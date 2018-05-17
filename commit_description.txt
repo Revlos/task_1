@@ -1,0 +1,4 @@
+- Made basic adjustment of the project:
+-- Connected AngularJS.
+-- Now you can run local server, thru bowe task, for the purpose of development.
+-- Connected main module of app, and also items_and_comments component.
