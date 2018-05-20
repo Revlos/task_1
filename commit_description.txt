@@ -1,4 +1,4 @@
-- Now are present:
--- Object that include all that is needed for working with items.
--- Object that include most of that what is needed for creation of the new item.
-- In such way, here is present next functionality. Items that present in the model are shown. You can type name of the new item, and if the name is valid, then you can create new item with such name. Now are present only some basic validations. Also you can delete items by pressing "delete" button.
+- In controller present two new object. First - for working with present comments. Second for creation a new comment.
+- New comment will be pushed to array of comments only when you selected text area for new comment and pressed "Ctrl + Enter".
+- Also made some preparing for start of using Local Store.
+- When you press "Delete" button, click will not propagate to parent element.

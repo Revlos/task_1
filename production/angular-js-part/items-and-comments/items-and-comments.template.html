@@ -1,22 +1,45 @@
+<!--Items part: begin-->
 <div>
   <h1>Items</h1>
-  <div id="new_field">
-    <input type="text" ng-model="$ctrl.new_item.name" 
+  <div id="new_item">
+    <input type="text" ng-model="$ctrl.new_item.name" ng-trim="true"
     placeholder = "Type name here...">
     <button ng-click="$ctrl.new_item.add_new()">Add new</button>
   </div>
   <ul>
-    <li ng-repeat="item in $ctrl.items.arr">
-      <a href="#">
+    <li ng-repeat="item in $ctrl.items.arr track by $index">
+      <a href="#" ng-click="$ctrl.items.item_click($index)">
         <p>Name: {{item.name}}; id: {{item.id}};</p>
-        <button ng-click="$ctrl.items.delete_item($index)">Delete</button>
+        <button ng-click="$ctrl.items.delete_item($index, $event)">Delete</button>
       </a>
     </li>
   </ul>
 </div>
+<!--Items part: end-->
+
+<!--Comments part: begin-->
+<div>
+  <h1>Comments</h1>
+  <ul>
+    <li ng-repeat="comment_str in $ctrl.comments.array track by $index">
+      <p>{{comment_str}}</p>
+    </li>
+  </ul>
+  <div id="new_comment">
+    <textarea cols="30" rows="10" 
+    ng-model="$ctrl.new_comment.comment_text" 
+    ng-keydown="$ctrl.new_comment.key_down($event)" 
+    ng-trim="false"></textarea>
+  </div>
+</div>
+<!--Comments part: end-->
 
 <div ng-show="$ctrl.test_mode">
   <h1>For tests:</h1>
   <p>New item name: {{$ctrl.new_item.name}}</p>
   <p>Items array: {{$ctrl.items.arr}}</p>
+  <p>New comm text: {{$ctrl.new_comment.comment_text}}</p>
+  <p>Comments array: {{$ctrl.comments.array}}</p>
 </div>
+
+<span id="test">test<br/> test</span>

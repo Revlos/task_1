@@ -37,6 +37,11 @@ angular.
             id: 3,
             name: "name 3",
             is_active: false
+          },
+          {
+            id: 3,
+            name: "name 3",
+            is_active: false
           }
         ];
 
@@ -178,16 +183,83 @@ angular.
 
         //Onclick handler for "Delete" button near the item:
         //This is the function to delete item by its index.
-        self.items.delete_item = function(item_index) {
+        self.items.delete_item = function(item_index, event) {
           
           //For tests:
           //console.log(item_index);
 
           self.items.arr.splice(item_index, 1);
+
+          //For test:
+          //console.log(event);
+
+          //Stop propagation to items box:
+          event.stopImmediatePropagation();
         };
 
         
         /*Items part: end*/
         /*#################################################################*/
+
+        /*#################################################################*/
+        /*Comments part: end*/
+
+        //Object that will contain all for comments of selected item:
+        self.comments = {
+          item_id: 0,
+          array: []
+        };
+
+        //For test:
+        self.comments.item_id = 10;
+        self.comments.array = [
+          "Some comment 1.",
+          "Some comment 2.",
+          "Some comment 1."
+        ];
+
+        //Object that contain all for creation of new item:
+        self.new_comment = {};
+
+        //Typed comment text:
+        self.new_comment.comment_text = "";
+
+        //Literally keydown event handler for new-comment field:
+        self.new_comment.key_down = function(event_obj) {
+
+          //For tests:
+          //console.dir(event_obj);
+
+          //Checking if was pressed "Ctrl + Enter".
+          //If was pressed do what below, else do nothing.
+          if(event_obj.ctrlKey && event_obj.key === "Enter") {
+
+            //Adding new comment:
+            self.comments.array.push(self.new_comment.comment_text);
+
+            //Blur text field to remove auto-repeat keys problems:
+            event_obj.target.blur();
+          }
+        };
+
+        /*######################*/
+        /*Small items part: begin*/
+
+        //FUnction tha fires when item is clicked:
+        self.items.item_click = function (item_index) {
+
+          //Set id of item that was chosen to show comments of it:
+          self.comments.id = self.items.arr[item_index].id;
+
+          //For checking:
+          //console.log(self.comments.id);
+        };
+
+        /*Small items part: end*/
+        /*######################*/
+
+        /*Comments part: end*/
+        /*#################################################################*/
+        
       }
     });
