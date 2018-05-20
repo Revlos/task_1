@@ -1,1 +1,22 @@
-<p>test line = {{$ctrl.test}}</p>
+<div>
+  <h1>Items</h1>
+  <div id="new_field">
+    <input type="text" ng-model="$ctrl.new_item.name" 
+    placeholder = "Type name here...">
+    <button ng-click="$ctrl.new_item.add_new()">Add new</button>
+  </div>
+  <ul>
+    <li ng-repeat="item in $ctrl.items.arr">
+      <a href="#">
+        <p>Name: {{item.name}}; id: {{item.id}};</p>
+        <button ng-click="$ctrl.items.delete_item($index)">Delete</button>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div ng-show="$ctrl.test_mode">
+  <h1>For tests:</h1>
+  <p>New item name: {{$ctrl.new_item.name}}</p>
+  <p>Items array: {{$ctrl.items.arr}}</p>
+</div>
