@@ -1,4 +1,9 @@
-- In controller present two new object. First - for working with present comments. Second for creation a new comment.
-- New comment will be pushed to array of comments only when you selected text area for new comment and pressed "Ctrl + Enter".
-- Also made some preparing for start of using Local Store.
-- When you press "Delete" button, click will not propagate to parent element.
+- Added writing and reading of the items array from the Local Storage.
+-- Items array will contain data about items and also their comments arrays.
+-- To write - "save" button.
+-- Reading is present in the initialization of the controller object.
+- Every items object, in the items array, now have property that will contain array of comments.
+- Present some specific control of how and what comments will be displayed in view. Also is controlled showing of the new comments field.
+- Changed conditions, by which, will be present reaction of program to the typed text in the new_comment area.
+- Now when you click on to the item it will become active and its comments will be displayed.
+-- Active item will have some specific class on it.

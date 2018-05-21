@@ -10,6 +10,60 @@ angular.
         //For test purposes:
         self.test_mode = true;
 
+        /*#################################################################*/
+        /*Working with Local Storage: begin*/
+
+        //Object to work with Local Storage:
+        self.my_local_storage = {};
+
+        //Get items array from local storage:
+        //-It will return such array.
+        self.my_local_storage.get_items_array = function() {
+          //First check if there anything on this key:
+          if( localStorage.getItem("items_arr") !== null &&
+              localStorage.getItem("items_arr") !== undefined) {
+            return JSON.parse(localStorage.getItem("items_arr"));
+          } else {
+            return [];
+          }
+        };
+
+        //Test:
+        //console.log(self.my_local_storage.get_items_array());
+
+        //Save items array in the local storage:
+        //- You need to pass array to save.
+        //- ! Shallow copy somehow not shallow.
+        self.my_local_storage.save_items_array = function(array) {
+
+          var shallow_array = array.slice();
+          
+          //If array is not empty:
+          if(shallow_array.length !== 0) {
+
+            //Make all items not active:
+            //!!! Somehow this is not shallow copy - there problems with this.
+            /*
+            shallow_array.forEach(function(item) {
+              item.is_active = false;
+            });
+            */
+
+            localStorage.setItem("items_arr", JSON.stringify(shallow_array));
+          } else {
+            //Else just remove item from Local Stogare:
+            localStorage.removeItem("items_arr");
+          }
+        };
+
+        //Reminder how to work with local storage:
+        //- localStorage.setItem("items_arr", JSON.stringify([1,2,3]));
+        //- JSON.parse(localStorage.getItem("items_arr"));
+        //- localStorage.removeItem("items_arr");
+
+        /*Working with Local Storage: end*/
+        /*#################################################################*/
+
 
         /*#################################################################*/
         /*Items part: begin*/
@@ -19,31 +73,26 @@ angular.
 
         //Items array:
         self.items.arr = [];
-
-        //For test:
-        /**/
-        self.items.arr = [
+        /*Will be something similar to this:
+        [
           {
             id: 10,
             name: "name 1",
-            is_active: false
+            is_active: false,
+            comments_arr: ["one", "two"]
           },
           {
             id: 2,
             name: "name 2",
-            is_active: false
+            is_active: false,
+            comments_arr: ["one", "two"]
           },
-          {
-            id: 3,
-            name: "name 3",
-            is_active: false
-          },
-          {
-            id: 3,
-            name: "name 3",
-            is_active: false
-          }
-        ];
+        ]
+        */
+
+        //Made initial reading of the items array:
+        // ! If there is no data in Local Storage, the will be present empty array.
+        self.items.arr = self.my_local_storage.get_items_array();
 
         //Function to create unique id for the new item:
         //It will return id. Id is from [1,2,3,4,...].
@@ -81,19 +130,10 @@ angular.
 
           return new_id;
         };
-
-        
+       
 
         //Object for "new" field:----------------------------------------
         self.new_item = {};
-
-        /*Example of object for one item:
-        {
-          id: 1,
-          name: "name 1",
-          is_active: false
-        }
-        */
 
         //Pseudo constructor for object of one item:
         self.new_item.OneItem = function () {
@@ -104,6 +144,7 @@ angular.
           obj.id = 0;
           obj.name = "name";
           obj.is_active = false;
+          obj.comments_arr = [];
 
           return obj;
         }
@@ -205,18 +246,22 @@ angular.
         /*Comments part: end*/
 
         //Object that will contain all for comments of selected item:
-        self.comments = {
-          item_id: 0,
-          array: []
+        self.comments_to_show = {
+          //Index of selected item:
+          //When no item is selected will be 0.
+          item_index: 0,
+          //Flag - if once was selected some item:
+          item_once_selected: false,
+          //Show or not - comments and new comment field:
+          show: function() {
+            //Show only when some item was selected and only when items array is not empty:
+            if(this.item_once_selected && self.items.arr.length !== 0) {
+              return true;
+            } else {
+              return false;
+            }
+          }
         };
-
-        //For test:
-        self.comments.item_id = 10;
-        self.comments.array = [
-          "Some comment 1.",
-          "Some comment 2.",
-          "Some comment 1."
-        ];
 
         //Object that contain all for creation of new item:
         self.new_comment = {};
@@ -227,32 +272,65 @@ angular.
         //Literally keydown event handler for new-comment field:
         self.new_comment.key_down = function(event_obj) {
 
-          //For tests:
-          //console.dir(event_obj);
+          //If no item is selected do nothing; Also do nothing if entered only white space:
+          if(self.comments_to_show.item_once_selected && self.new_comment.comment_text.length !== 0) {
 
-          //Checking if was pressed "Ctrl + Enter".
-          //If was pressed do what below, else do nothing.
-          if(event_obj.ctrlKey && event_obj.key === "Enter") {
+            //For tests:
+            //console.dir(event_obj);
 
-            //Adding new comment:
-            self.comments.array.push(self.new_comment.comment_text);
+            //Checking if was pressed "Ctrl + Enter".
+            //If was pressed do what below, else do nothing.
+            if(event_obj.ctrlKey && event_obj.key === "Enter") {
 
-            //Blur text field to remove auto-repeat keys problems:
-            event_obj.target.blur();
+              //Adding new comment:
+              self.items.arr[self.comments_to_show.item_index].
+                comments_arr.push(self.new_comment.comment_text);
+
+              //Blur text field to remove problems with auto-repeat keys:
+              event_obj.target.blur();
+            }
+
           }
         };
 
         /*######################*/
         /*Small items part: begin*/
 
-        //FUnction tha fires when item is clicked:
+        //Function that fires when item is clicked:
         self.items.item_click = function (item_index) {
 
-          //Set id of item that was chosen to show comments of it:
-          self.comments.id = self.items.arr[item_index].id;
+          //Set all items not active:
+          self.items.arr.forEach(function(item, index) {
+            item.is_active = false;
+          });
+
+          //Set clicked item active:
+          self.items.arr[item_index].is_active = true;
+
+          //Set that some item was selected:
+          self.comments_to_show.item_once_selected = true;
+
+          //Set index of item that was chosen to show comments of it:
+          self.comments_to_show.item_index = item_index;
 
           //For checking:
           //console.log(self.comments.id);
+        };
+
+        //Function to calculate class of the items:
+        self.items.class_to_set = function(item_index) {
+
+          //Check if there are items in items array:
+          if(self.items.arr.length !== 0) {
+            if(self.items.arr[item_index].is_active && 
+              //!!! Below is that what is needed to consider problems with shallow copying 
+              //and that for now also save is_active value.
+              self.comments_to_show.item_once_selected === true) {
+              return "active_item";
+            }
+          }
+
+          return "";
         };
 
         /*Small items part: end*/
@@ -260,6 +338,18 @@ angular.
 
         /*Comments part: end*/
         /*#################################################################*/
-        
+
+        /*######################*/
+        /*Small Local Storage part: begin*/
+
+        //Save all:
+        self.my_local_storage.save_all = function() {
+
+          //Save items:
+          self.my_local_storage.save_items_array(self.items.arr);
+        };
+
+        /*Small Local Storage part: end*/
+        /*######################*/
       }
     });
