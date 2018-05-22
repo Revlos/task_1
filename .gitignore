@@ -2,4 +2,6 @@
 
 /production/bower_components
 
+/distribution
+
 !.gitignore

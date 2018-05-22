@@ -13,6 +13,9 @@
   "devDependencies": {
     "bower": "^1.8.4",
     "browser-sync": "^2.24.4",
-    "gulp": "^3.9.1"
+    "del": "^3.0.0",
+    "fs": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "run-sequence": "^2.2.1"
   }
 }

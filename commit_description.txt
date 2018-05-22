@@ -1,4 +1,0 @@
-- Corrected showing comments when deleting items.
-- Added bootstrap, jquery and popper.js. Bootstrap now is connected.
-- Removed default behavior of anchors that I used as items, because I used "#" as href.
-- Made first approximation to visual style of the app.
