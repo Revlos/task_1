@@ -8,7 +8,7 @@ angular.
         var self = this;
 
         //For test purposes:
-        self.test_mode = true;
+        self.test_mode = false;
 
         /*#################################################################*/
         /*Working with Local Storage: begin*/
@@ -221,23 +221,6 @@ angular.
           }
         };
         //end: Object for "new" field:------------------------------------
-
-        //Onclick handler for "Delete" button near the item:
-        //This is the function to delete item by its index.
-        self.items.delete_item = function(item_index, event) {
-          
-          //For tests:
-          //console.log(item_index);
-
-          self.items.arr.splice(item_index, 1);
-
-          //For test:
-          //console.log(event);
-
-          //Stop propagation to items box:
-          event.stopImmediatePropagation();
-        };
-
         
         /*Items part: end*/
         /*#################################################################*/
@@ -250,12 +233,12 @@ angular.
           //Index of selected item:
           //When no item is selected will be 0.
           item_index: 0,
-          //Flag - if once was selected some item:
-          item_once_selected: false,
+          //Is some item selected?
+          some_item_selected: false,
           //Show or not - comments and new comment field:
           show: function() {
-            //Show only when some item was selected and only when items array is not empty:
-            if(this.item_once_selected && self.items.arr.length !== 0) {
+            //Show only when some item is selected and only when items array is not empty:
+            if(this.some_item_selected && self.items.arr.length !== 0) {
               return true;
             } else {
               return false;
@@ -273,7 +256,7 @@ angular.
         self.new_comment.key_down = function(event_obj) {
 
           //If no item is selected do nothing; Also do nothing if entered only white space:
-          if(self.comments_to_show.item_once_selected && self.new_comment.comment_text.length !== 0) {
+          if(self.comments_to_show.some_item_selected && self.new_comment.comment_text.length !== 0) {
 
             //For tests:
             //console.dir(event_obj);
@@ -297,7 +280,10 @@ angular.
         /*Small items part: begin*/
 
         //Function that fires when item is clicked:
-        self.items.item_click = function (item_index) {
+        self.items.item_click = function (item_index, event) {
+
+          //Prevente default:
+          event.preventDefault();
 
           //Set all items not active:
           self.items.arr.forEach(function(item, index) {
@@ -308,13 +294,13 @@ angular.
           self.items.arr[item_index].is_active = true;
 
           //Set that some item was selected:
-          self.comments_to_show.item_once_selected = true;
+          self.comments_to_show.some_item_selected = true;
 
           //Set index of item that was chosen to show comments of it:
           self.comments_to_show.item_index = item_index;
 
           //For checking:
-          //console.log(self.comments.id);
+          //console.log(event.isDefaultPrevented());
         };
 
         //Function to calculate class of the items:
@@ -325,13 +311,50 @@ angular.
             if(self.items.arr[item_index].is_active && 
               //!!! Below is that what is needed to consider problems with shallow copying 
               //and that for now also save is_active value.
-              self.comments_to_show.item_once_selected === true) {
+              self.comments_to_show.some_item_selected === true) {
               return "active_item";
             }
           }
 
           return "";
         };
+
+        //Onclick handler for "Delete" button near the item:
+        //This is the function to delete item by its index.
+        self.items.delete_item = function(item_index, event) {
+          
+          //For tests:
+          //console.log(item_index);
+
+
+          //Consider that how deleting will affect active item 
+          //and display of the comments:
+          //First if some item is selected. What we do we need to do only when some item is selected.
+          if (self.comments_to_show.some_item_selected) {
+            //If deleted item goes after selected item, we do nothing:
+            if(item_index <= self.comments_to_show.item_index) {
+              //If deleted item index = selected item:
+              if(item_index === self.comments_to_show.item_index) {
+                //Set that no item is selected:
+                self.comments_to_show.some_item_selected = false;
+              }
+
+              //If deleted item index < selected item:
+              if(item_index < self.comments_to_show.item_index) {
+                //Correct index of selected item:
+                self.comments_to_show.item_index--;
+              } 
+            }
+          }
+
+          self.items.arr.splice(item_index, 1);
+
+          //For test:
+          //console.log(event);
+
+          //Stop propagation to items box:
+          event.stopImmediatePropagation();
+        };//end: self.items.delete_item = function(item_index, event) {
 
         /*Small items part: end*/
         /*######################*/

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="diaryApp">
+<!--Force to use jqLite-->
+<html lang="en" ng-app="diaryApp" ng-jq>
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +13,10 @@
   <!--Items and comments parts-->
   <script src="angular-js-part/items-and-comments/items-and-comments.module.js"></script>
   <script src="angular-js-part/items-and-comments/items-and-comments.component.js"></script>
+  <!--Bootstrap-->
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <!--GoogleFonts-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
   <script src="js/main.js"></script>
 </head>
@@ -19,5 +24,11 @@
   
   <items-and-comments></items-and-comments>
   
+  <!--Bootstrap and JQuery-->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>

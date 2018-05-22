@@ -1,9 +1,4 @@
-- Added writing and reading of the items array from the Local Storage.
--- Items array will contain data about items and also their comments arrays.
--- To write - "save" button.
--- Reading is present in the initialization of the controller object.
-- Every items object, in the items array, now have property that will contain array of comments.
-- Present some specific control of how and what comments will be displayed in view. Also is controlled showing of the new comments field.
-- Changed conditions, by which, will be present reaction of program to the typed text in the new_comment area.
-- Now when you click on to the item it will become active and its comments will be displayed.
--- Active item will have some specific class on it.
+- Corrected showing comments when deleting items.
+- Added bootstrap, jquery and popper.js. Bootstrap now is connected.
+- Removed default behavior of anchors that I used as items, because I used "#" as href.
+- Made first approximation to visual style of the app.

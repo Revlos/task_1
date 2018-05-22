@@ -1,43 +1,82 @@
+<div class="container-fluid">
+  <div class="row no-gutters">
+    <div class="col-2">
+      <div class="dy-aside">
+        <h1 class="dy-aside__app_name">Diary app</h1>
+        <div class="dy-aside__comment">Comment with no sense</div>
+        <p class="dy-aside__save_bttn">
+          <Button ng-click="$ctrl.my_local_storage.save_all()">Save</Button>
+        </p>
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="dy-main">
+        <div class="row no-gutters">
+          <div class="col-6">
 <!--Items part: begin-->
-<div>
-  <h1>Items</h1>
-  <p>
-    <Button ng-click="$ctrl.my_local_storage.save_all()">Save</Button>
-  </p>
-  <div id="new_item">
-    <input type="text" ng-model="$ctrl.new_item.name" ng-trim="true"
-    placeholder = "Type name here...">
-    <button ng-click="$ctrl.new_item.add_new()">Add new</button>
+<div class="dy-main__col dy-main__items">
+  <h1 class="dy-main__col__header">Items</h1>
+  <div id="new_item" class="dy-main__items__new clearfix">
+    <div class="dy-main__items__new__item dy-main__items__new__input">
+      <input type="text" ng-model="$ctrl.new_item.name" ng-trim="true"
+      placeholder = "Type name here...">
+    </div>
+    <div class="dy-main__items__new__item dy-main__items__new__bttn">
+      <button ng-click="$ctrl.new_item.add_new()">Add new</button>
+    </div>
   </div>
-  <ul>
-    <li ng-repeat="item in $ctrl.items.arr track by $index">
+  <ul class="dy-main__items__list">
+    <li ng-repeat="item in $ctrl.items.arr track by $index" 
+    class="dy-main__items__list__item">
       <div ng-class="$ctrl.items.class_to_set($index)">
-          <a href="#" ng-click="$ctrl.items.item_click($index)">
-            <p>Name: {{item.name}}; id: {{item.id}}; amount of comments: <span>{{item.comments_arr.length}}</span></p>
-            <button ng-click="$ctrl.items.delete_item($index, $event)">Delete</button>
+          <a href="#" ng-click="$ctrl.items.item_click($index, $event)">
+          <div class="row no-gutters">
+            <div class="col-9">
+              <span class="dy-main__items__list__item__name">{{item.name}}</span>
+              <span class="dy-main__items__list__item__comm_n">{{item.comments_arr.length}}</span>
+            </div>
+            <div class="col-3 dy-main__items__list__item__del_div">
+              <button ng-click="$ctrl.items.delete_item($index, $event)">Delete</button>
+            </div>
+          </div>
           </a>
       </div>
     </li>
   </ul>
 </div>
 <!--Items part: end-->
-
+          </div>
+          <div class="col-6">
 <!--Comments part: begin-->
-<div>
-  <h1>Comments</h1>
-  <ul ng-show="$ctrl.comments_to_show.show()">
+<div class="dy-main__col dy-main__comments">
+  <h1 class="dy-main__col__header">Comments</h1>
+  <ul ng-show="$ctrl.comments_to_show.show()" class="dy-main__comments__ul">
     <li ng-repeat="comment_str in $ctrl.items.arr[$ctrl.comments_to_show.item_index].comments_arr track by $index">
-      <p>{{comment_str}}</p>
+      <div class="row no-gutters">
+        <div class="col-2">
+          <div class="dy-main__comments__ul__li__col_box" ng-style=""></div>
+        </div>
+        <div class="col-10 dy-main__comments__ul__li__comment">
+          <p>{{comment_str}}</p>
+        </div>
+      </div>
     </li>
   </ul>
-  <div id="new_comment" ng-show="$ctrl.comments_to_show.show()">
-    <textarea cols="30" rows="10" 
+  <div ng-show="$ctrl.comments_to_show.show()">
+    <textarea rows="4" 
     ng-model="$ctrl.new_comment.comment_text" 
     ng-keydown="$ctrl.new_comment.key_down($event)" 
-    ng-trim="true"></textarea>
+    ng-trim="true" 
+    class="dy-main__comments__textarea"></textarea>
   </div>
 </div>
 <!--Comments part: end-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div ng-show="$ctrl.test_mode">
   <h1>For tests:</h1>
@@ -46,5 +85,3 @@
   <p>New comm text: {{$ctrl.new_comment.comment_text}}</p>
   <p>Comments array: {{$ctrl.items.arr[$ctrl.comments_to_show.item_index].comments_arr}}</p>
 </div>
-
-<span id="test">test<br/> test</span>

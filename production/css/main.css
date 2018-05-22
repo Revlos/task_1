@@ -1,4 +1,328 @@
-/*For test:*/
-.active_item {
-  border: 1px solid red;
+/*--------------------------------------------------------------------------*/
+/*Color palette:------------------------------------------------------------*/
+/*
+- dark-violet: rgb(43,47,62);
+- gray-dark: rgb(128, 128, 128);
+- gray-shad-border: rgb(242, 242, 242);
+- gray-shadow: rgb(128, 128, 128);
+- gray-light: rgb(249, 249, 249);
+- gray-main-header: rgb(86, 90, 105);
+- gray-main-new-input: rgb(204, 204, 204);
+- white: white;
+*/
+/*end: Color palette:-------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------*/
+/*Fonts:--------------------------------------------------------------------*/
+/*
+- open sans:
+-- Light: weight 300
+-- Semibold: weight 600
+*/
+/*end: Fonts:---------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+/*General style:*/
+
+/*General font*/
+html {
+  font-size: 16px;
 }
+
+body {
+  font-family: /*open sans*/'Open Sans', sans-serif !important;
+}
+
+/**/
+body {
+  background-color: /*dark-violet*/rgb(43, 47, 62);
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  cursor: default;
+}
+
+/*Get rid of containers pudding:*/
+.container-fluid {
+  padding: 0;
+}
+
+/*--------------------------------------------------------------------------*/
+/*Style of diary aside part:------------------------------------------------*/
+
+.dy-aside {
+  /*!!! Made maybe in %*/
+  padding: 10px;
+}
+
+/*App name*/
+.dy-aside__app_name {
+  color: /*white*/ white;
+  text-transform: uppercase;
+  font-weight: /*ligth*/50 !important;
+  font-size: 2rem;
+}
+
+.dy-aside__comment {
+  color: /*gray-dark*/rgb(128, 128, 128);
+  font-size: 1.3rem;
+}
+
+.dy-aside__save_bttn button {
+  margin: 20px 0 20px;
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  color: rgb(255, 119, 146);
+  border: 2px solid rgb(255, 119, 146);
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold
+}
+
+.dy-aside__save_bttn button:hover, 
+.dy-aside__save_bttn button:focus {
+  background-color: rgb(255, 119, 146);
+  color: rgb(43, 47, 62);
+  border-radius: 5px;
+}
+
+.dy-aside__save_bttn button:active {
+  background-color: rgb(255, 97, 129);
+  color: rgb(43, 47, 62);
+  border-radius: 5px;
+}
+
+/*end: Style of diary aside part:-------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------------------*/
+/*Style of diary main part:------------------------------------------------*/
+
+.dy-main {
+  background-color: /*gray-light*/ rgb(249, 249, 249);
+  padding: 20px;
+}
+
+/*Columns of diary main part:*/
+.dy-main__col {
+  background-color: /*white*/ white;
+  /*Shadow:*/
+  /*- border:*/
+  border: 1px solid /*gray-shad-border*/ rgb(242, 242, 242);
+  box-shadow: 1px 1px 5px /*gray-shadow*/ rgb(128, 128, 128);
+
+  margin: 10px;
+  padding: 20px;
+}
+
+/*Common style of headers in the main part:*/
+.dy-main__col__header {
+  color: /*gray-main-header*/ rgb(86, 90, 105) !important;
+  font-weight: /*Light*/ 300 !important;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/*Items part:.......................................*/
+
+.dy-main__items {
+  padding-left: 30px;
+}
+
+.dy-main__items__new {
+  margin-bottom: 20px;
+}
+
+.dy-main__items__new__item >* {
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+}
+
+.dy-main__items__new__input {
+  width: 66%;
+  float: left;
+  padding-right: 2px;
+}
+
+.dy-main__items__new__input > input {
+  border: 2px solid /*gray-main-new-input*/ rgb(228, 228, 228);
+  color: rgb(48, 48, 48);
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.dy-main__items__new__bttn {
+  width: 33%;
+  float: right;
+  padding-left: 2px;
+}
+
+.dy-main__items__new__bttn button {
+  background-color: rgb(39, 204, 192);
+  border: 2px solid /*gray-main-new-input*/ rgb(39, 204, 192);
+  border-radius: 5px;
+  color: white;
+  box-shadow: unset;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.dy-main__items__new__bttn button:hover, 
+.dy-main__items__new__bttn button:focus {
+  background-color: rgb(36, 173, 164);
+  border-color: rgb(36, 173, 164);
+}
+
+.dy-main__items__new__bttn button:active {
+  background-color: rgb(42, 197, 187);
+  border-color: rgb(42, 197, 187);
+}
+
+/*List of items:*/
+.dy-main__items__list {
+  list-style: none;
+  padding: 0;
+}
+
+.active_item {
+  border-left: 5px solid rgb(255, 54, 94);
+  margin-left: -34px;
+  padding-left: 29px;
+}
+
+.dy-main__items__list__item a {
+  text-decoration: none;
+}
+
+.dy-main__items__list__item a {
+  border-bottom: 2px solid /*gray-shad-border*/ rgb(242, 242, 242);
+  padding: 10px 0 10px;
+  display: block;
+}
+
+.dy-main__items__list__item a:hover {
+  background-color: rgb(236, 236, 236) !important;
+}
+
+.dy-main__items__list__item a:active {
+  background-color: rgb(228, 228, 228) !important;
+}
+
+.dy-main__items__list__item__name {
+  color: rgb(53, 53, 53) !important;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.dy-main__items__list__item__comm_n {
+  display: inline-block;
+  color: white;
+  background-color: rgb(39, 204, 192);
+  border-radius: 10px;
+  padding: 0 10px 0;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.dy-main__items__list__item__del_div button {
+  width: 100%;
+  height: 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.dy-main__items__list__item__del_div button {
+  background-color: transparent;
+  color: rgb(255, 119, 146);
+  border: 2px solid rgb(255, 119, 146);
+  border-radius: 5px;
+}
+
+.dy-main__items__list__item__del_div button:hover, 
+.dy-main__items__list__item__del_div button:focus {
+  background-color: rgb(255, 119, 146);
+  color: white;
+  border-radius: 5px;
+}
+
+.dy-main__items__list__item__del_div button:active {
+  background-color: rgb(255, 97, 129);
+}
+
+/*end: Items part:..................................*/
+
+
+/*Comments part:.....................................*/
+
+.dy-main__comments {
+  padding-left: 20px;
+}
+
+.dy-main__comments__ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dy-main__comments__ul li {
+  border-bottom: 2px solid /*gray-shad-border*/ rgb(242, 242, 242);
+  padding: 15px 0 20px;
+}
+
+.dy-main__comments__ul li:last-child {
+  border-bottom: none;
+}
+
+.dy-main__comments__ul__li__col_box {
+  box-sizing: content-box;
+  margin: 0 20px 0 5px;
+  height: 100%;
+  /*background-color: blueviolet;*/
+}
+
+.dy-main__comments__ul > li:nth-child(2n+1) .dy-main__comments__ul__li__col_box {
+  background-image: url("../img/col_1.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right top;
+}
+
+.dy-main__comments__ul > li:nth-child(2n) .dy-main__comments__ul__li__col_box {
+  background-image: url("../img/col_2.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right top;
+}
+
+.dy-main__comments__ul__li__comment {
+  color: rgb(102, 102, 102);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.dy-main__comments__textarea {
+  width: 100%;
+  resize: none;
+  border: 2px solid rgb(224, 224, 224);
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(95, 95, 95);
+}
+
+
+/*end: Comments part:................................*/
+
+/*end: Style of diary main part:-------------------------------------------*/
+/*--------------------------------------------------------------------------*/
