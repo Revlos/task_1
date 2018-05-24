@@ -5,7 +5,7 @@
         <h1 class="dy-aside__app_name">Diary app</h1>
         <div class="dy-aside__comment">Comment with no sense</div>
         <p class="dy-aside__save_bttn">
-          <Button ng-click="$ctrl.my_local_storage.save_all()">Save</Button>
+          <Button ng-click="$ctrl.my_local_storage.save_all($event)">{{$ctrl.my_local_storage.save_msg}}</Button>
         </p>
       </div>
     </div>
@@ -19,7 +19,7 @@
   <div id="new_item" class="dy-main__items__new clearfix">
     <div class="dy-main__items__new__item dy-main__items__new__input">
       <input type="text" ng-model="$ctrl.new_item.name" ng-trim="true"
-      placeholder = "Type name here...">
+      placeholder = "Type name here..." ng-keydown="$ctrl.new_item.input_key_down($event)">
     </div>
     <div class="dy-main__items__new__item dy-main__items__new__bttn">
       <button ng-click="$ctrl.new_item.add_new()">Add new</button>
@@ -67,7 +67,7 @@
     ng-model="$ctrl.new_comment.comment_text" 
     ng-keydown="$ctrl.new_comment.key_down($event)" 
     ng-trim="true" 
-    class="dy-main__comments__textarea"></textarea>
+    class="dy-main__comments__textarea" id="dy-main__comments__textarea"></textarea>
   </div>
 </div>
 <!--Comments part: end-->

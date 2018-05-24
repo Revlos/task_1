@@ -1,0 +1,5 @@
+- Added warning when closing tab if some data of the app was changed.
+- Adding items on pressing "Enter".
+- Now you can focus text-field of the new comment by pressing the "Ctrl + Enter". But to make this, was removed "blur()" of text-field after adding new comment. So can be problems with auto repeat pressing the buttons. 
+- Removed "quiet saving". Now you see if data was saved.
+- Removed redirecting to "#" when pressing "delete" buttons.

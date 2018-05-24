@@ -3,7 +3,7 @@ angular.
   module("itemsAndComments").
     component("itemsAndComments", {
       templateUrl: "angular-js-part/items-and-comments/items-and-comments.template.html",
-      controller: function ItemsAndCommentsController () {
+      controller: ["$timeout", function ItemsAndCommentsController ($timeout) {
 
         var self = this;
 
@@ -220,6 +220,13 @@ angular.
 
           }
         };
+
+        //Adding new item thru pressing "Enter" on input field:
+        self.new_item.input_key_down = function(event_obj) {
+          if(event_obj.key === "Enter" && event_obj.ctrlKey === false) {
+            self.new_item.add_new();
+          }
+        };
         //end: Object for "new" field:------------------------------------
         
         /*Items part: end*/
@@ -243,7 +250,9 @@ angular.
             } else {
               return false;
             }
-          }
+          },
+          //new comment field dom element:
+          new_comm_element: document.querySelector("#dy-main__comments__textarea")
         };
 
         //Object that contain all for creation of new item:
@@ -251,6 +260,18 @@ angular.
 
         //Typed comment text:
         self.new_comment.comment_text = "";
+
+        //Focus new-comment textarea on "Ctrl + Enter":
+        document.addEventListener("keydown", function(event) {
+          //Check if some item is selected:
+          if(self.comments_to_show.some_item_selected) {
+            //Check if was pressed "Ctrl + Enter":
+            if(event.ctrlKey && event.key === "Enter") {
+              //Focus textarea for new comment:
+              self.comments_to_show.new_comm_element.focus();
+            }
+          }
+        }, false);
 
         //Literally keydown event handler for new-comment field:
         self.new_comment.key_down = function(event_obj) {
@@ -270,7 +291,13 @@ angular.
                 comments_arr.push(self.new_comment.comment_text);
 
               //Blur text field to remove problems with auto-repeat keys:
+              //!!! For now withoult this - because of how work "Focus new-comment field on "Ctrl + Enter":".
+              //event_obj.target.blur();
+
+              //Focus again to textarea to move with it with scroll:
+              //!!! This is done thru some hack. Make later better.
               event_obj.target.blur();
+              event_obj.target.focus();
             }
 
           }
@@ -322,6 +349,10 @@ angular.
         //Onclick handler for "Delete" button near the item:
         //This is the function to delete item by its index.
         self.items.delete_item = function(item_index, event) {
+
+          //!!! Check this for safety.
+          //In such way I removed redirect to "#" on click:
+          event.preventDefault();
           
           //For tests:
           //console.log(item_index);
@@ -365,14 +396,52 @@ angular.
         /*######################*/
         /*Small Local Storage part: begin*/
 
+        //Save message:
+        self.my_local_storage.save_msg = "Save";
+
         //Save all:
-        self.my_local_storage.save_all = function() {
+        self.my_local_storage.save_all = function(event) {
 
           //Save items:
           self.my_local_storage.save_items_array(self.items.arr);
+
+          //Blur save button:
+          event.target.blur();
+
+          //Show message that data was saved:
+          self.my_local_storage.save_msg = "Data was Saved";
+
+          //Restore normal message:
+          $timeout(function() {
+            self.my_local_storage.save_msg = "Save";
+          }, 3000);
         };
+
+        //Handling closing of the app:
+        //Taken from: https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+        // ! Apply license later.
+        window.addEventListener("beforeunload", function (event) {
+
+          //Check if present any changes in "data":
+          //!!! Made this better.
+          //!!! For now data will be different also when user select some item, 
+          //because of that tha will be "true" active-property of such item.
+          var data_from_local_storage = JSON.stringify(
+            self.my_local_storage.get_items_array()
+          );
+          var data_present_in_app = JSON.stringify(
+            self.items.arr
+          );
+          if(data_present_in_app !== data_from_local_storage) {
+            var confirmationMessage = "There can be some changes, that will be not saved.";
+
+            event.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
+            return confirmationMessage;                  // Gecko, WebKit, Chrome <34
+          }
+          
+        });
 
         /*Small Local Storage part: end*/
         /*######################*/
-      }
+      }]
     });
