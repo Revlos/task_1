@@ -1,0 +1,31 @@
+/*For test purpose:*/
+#test_compare_div {
+
+  margin: 0;
+  border: 0;
+  padding: 0;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 1280px;
+  height: 800px;
+
+  z-index: 10000;
+  /**/display: none;
+
+
+  background-image: url("test_UI.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: left top;
+}
+
+#test_compare_div.up_div {
+  display: block;
+}
+
+#test_compare_div.overlay_div {
+  opacity: 0.5;
+  display: block;
+}

@@ -23,6 +23,7 @@
 /*end: Fonts:---------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
+
 /*General style:*/
 
 /*General font*/
@@ -221,12 +222,23 @@ a {
 .dy-main__items__list__item__name {
   color: rgb(53, 53, 53) !important;
   font-weight: bold;
+
   display: inline-block;
-  margin-right: 0.5rem;
+  box-sizing: border-box;
+
+  max-width: 100%;
+  overflow-wrap: break-word;
+
   font-size: 1rem;
+
+  /*
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;*/
 }
 
-.dy-main__items__list__item__comm_n {
+.dy-main__items__list__item__name__comm_n {
   display: inline-block;
   color: white;
   background-color: rgb(39, 204, 192);
@@ -234,6 +246,12 @@ a {
   padding: 0 10px 0;
   font-weight: bold;
   font-size: 0.9rem;
+
+  margin-left: 0.3rem;
+}
+
+.dy-main__items__list__item__del_div {
+  padding-left: 0.5rem !important;
 }
 
 .dy-main__items__list__item__del_div button {
@@ -284,31 +302,38 @@ a {
   border-bottom: none;
 }
 
-.dy-main__comments__ul__li__col_box {
+.dy-main__comments__col_box {
+  /*
   box-sizing: content-box;
+  */
   margin: 0 20px 0 5px;
-  height: 100%;
+  width: 50px;
   /*background-color: blueviolet;*/
 }
 
-.dy-main__comments__ul > li:nth-child(2n+1) .dy-main__comments__ul__li__col_box {
+.dy-main__comments__ul > li:nth-child(2n+1) .dy-main__comments__col_box {
+  /*
   background-image: url("../img/col_1.png");
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: right top;
+  background-position: right top;*/
+  background-color: rgb(255, 138, 0);
 }
 
-.dy-main__comments__ul > li:nth-child(2n) .dy-main__comments__ul__li__col_box {
-  background-image: url("../img/col_2.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right top;
+.dy-main__comments__ul > li:nth-child(2n) .dy-main__comments__col_box {
+  background-color: rgb(71, 86, 140);
 }
 
 .dy-main__comments__ul__li__comment {
   color: rgb(102, 102, 102);
   font-size: 0.9rem;
   font-weight: bold;
+
+  overflow-x: auto;
+}
+
+.dy-main__comments__new_comment .dy-main__comments__col_box {
+  background-color: rgb(230, 230, 230);
 }
 
 .dy-main__comments__textarea {
@@ -326,3 +351,8 @@ a {
 
 /*end: Style of diary main part:-------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+
+
+.img_test {
+  width: 66px;
+}

@@ -20,7 +20,7 @@ gulp.task("start", function() {
 
 //--Copy some files and folders
 gulp.task("dist-fill-copy", function (cb) {
-  gulp.src("production/**/*")
+  gulp.src(["production/**/*", "!production/for_tests/**/*", "!production/for_tests"])
   .pipe(gulp.dest("distribution"))
   .on("finish", function() {
     cb();
@@ -32,6 +32,10 @@ gulp.task("dist-fill-copy", function (cb) {
 gulp.task("dist-fill-delete", function (cb) {
 
   del.sync(["*/*/", "!*/dist/"], {cwd: "distribution/bower_components", force: true});
+
+  //Delete file of bootstrap which crush push to github.pages:
+  del.sync(["bootstrap/index.html"], {cwd: "distribution/bower_components", force: true});
+
   cb();
 });
 
@@ -43,5 +47,5 @@ gulp.task("dist-fill", function (cb) {
 //-Empty dist folder
 gulp.task("dist-empty", function () {
   //Delete all files
-  del.sync(["*"], {cwd: "distribution", force: true});
+  del.sync(["*", "!.gitkeep"], {cwd: "distribution", force: true});
 });

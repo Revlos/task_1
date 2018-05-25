@@ -3,7 +3,8 @@ angular.
   module("itemsAndComments").
     component("itemsAndComments", {
       templateUrl: "angular-js-part/items-and-comments/items-and-comments.template.html",
-      controller: ["$timeout", function ItemsAndCommentsController ($timeout) {
+      controller: ["$timeout", "$document", 
+      function ItemsAndCommentsController ($timeout, $document) {
 
         var self = this;
 
@@ -262,7 +263,9 @@ angular.
         self.new_comment.comment_text = "";
 
         //Focus new-comment textarea on "Ctrl + Enter":
-        document.addEventListener("keydown", function(event) {
+        
+        $document.on("keydown", function(event) {
+
           //Check if some item is selected:
           if(self.comments_to_show.some_item_selected) {
             //Check if was pressed "Ctrl + Enter":
@@ -271,7 +274,11 @@ angular.
               self.comments_to_show.new_comm_element.focus();
             }
           }
-        }, false);
+
+          //Tests:
+          //console.log(event.key);
+
+        });
 
         //Literally keydown event handler for new-comment field:
         self.new_comment.key_down = function(event_obj) {

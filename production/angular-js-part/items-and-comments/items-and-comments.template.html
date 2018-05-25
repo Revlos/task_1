@@ -32,8 +32,9 @@
           <a href="#" ng-click="$ctrl.items.item_click($index, $event)">
           <div class="row no-gutters">
             <div class="col-9">
-              <span class="dy-main__items__list__item__name">{{item.name}}</span>
-              <span class="dy-main__items__list__item__comm_n">{{item.comments_arr.length}}</span>
+              <span class="dy-main__items__list__item__name">{{item.name}}
+                <span class="dy-main__items__list__item__name__comm_n">{{item.comments_arr.length}}</span>
+              </span>
             </div>
             <div class="col-3 dy-main__items__list__item__del_div">
               <button ng-click="$ctrl.items.delete_item($index, $event)">Delete</button>
@@ -52,22 +53,34 @@
   <h1 class="dy-main__col__header">Comments</h1>
   <ul ng-show="$ctrl.comments_to_show.show()" class="dy-main__comments__ul">
     <li ng-repeat="comment_str in $ctrl.items.arr[$ctrl.comments_to_show.item_index].comments_arr track by $index">
-      <div class="row no-gutters">
-        <div class="col-2">
-          <div class="dy-main__comments__ul__li__col_box" ng-style=""></div>
-        </div>
-        <div class="col-10 dy-main__comments__ul__li__comment">
+      <div class="media">
+        <img src="img/img_square_transparent.png" alt="" 
+        class="dy-main__comments__col_box">
+        <div class="media-body dy-main__comments__ul__li__comment">
           <p>{{comment_str}}</p>
         </div>
       </div>
     </li>
   </ul>
+  <!--Old:
   <div ng-show="$ctrl.comments_to_show.show()">
     <textarea rows="4" 
     ng-model="$ctrl.new_comment.comment_text" 
     ng-keydown="$ctrl.new_comment.key_down($event)" 
     ng-trim="true" 
     class="dy-main__comments__textarea" id="dy-main__comments__textarea"></textarea>
+  </div>
+  -->
+  <div class="media dy-main__comments__new_comment" ng-show="$ctrl.comments_to_show.show()">
+    <img src="img/img_square_transparent.png" alt="" 
+    class="dy-main__comments__col_box">
+    <div class="media-body">
+      <textarea rows="4" 
+      ng-model="$ctrl.new_comment.comment_text" 
+      ng-keydown="$ctrl.new_comment.key_down($event)" 
+      ng-trim="true" 
+      class="dy-main__comments__textarea" id="dy-main__comments__textarea"></textarea>
+    </div>
   </div>
 </div>
 <!--Comments part: end-->

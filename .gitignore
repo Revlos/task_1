@@ -2,6 +2,7 @@
 
 /production/bower_components
 
-/distribution
+/distribution/**/*
 
 !.gitignore
+!/distribution/.gitkeep
