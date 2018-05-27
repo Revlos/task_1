@@ -32,7 +32,10 @@ html {
 }
 
 body {
-  font-family: /*open sans*/'Open Sans', sans-serif !important;
+  /*
+  font-family: 'Open Sans', sans-serif !important;
+  */
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 /**/

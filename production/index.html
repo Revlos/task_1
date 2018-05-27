@@ -4,19 +4,26 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>Diary app</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--AngularJS-->
   <script src="bower_components/angular/angular.min.js"></script>
   <!--Main app module-->
   <script src="angular-js-part/app.module.js"></script>
+  <!--Core module-->
+  <script src="angular-js-part/core/core.module.js"></script>
+  <!--Local storage service-->
+  <script src="angular-js-part/core/my-local-storage/my-local-storage.module.js"></script>
+  <script src="angular-js-part/core/my-local-storage/my-local-storage.service.js"></script>
   <!--Items and comments parts-->
   <script src="angular-js-part/items-and-comments/items-and-comments.module.js"></script>
   <script src="angular-js-part/items-and-comments/items-and-comments.component.js"></script>
   <!--Bootstrap-->
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
   <!--GoogleFonts-->
+  <!-- !!! For now will be used some more safe font.
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  -->
   <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
   <!--Compare-->
   <!--!!! Must be commented for distribution.-->

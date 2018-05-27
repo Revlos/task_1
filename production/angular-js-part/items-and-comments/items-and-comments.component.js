@@ -3,8 +3,11 @@ angular.
   module("itemsAndComments").
     component("itemsAndComments", {
       templateUrl: "angular-js-part/items-and-comments/items-and-comments.template.html",
-      controller: ["$timeout", "$document", 
-      function ItemsAndCommentsController ($timeout, $document) {
+      controller: ["$timeout", "$document", "MyLocalStorage", 
+      function ItemsAndCommentsController ($timeout, $document, MyLocalStorage) {
+
+        //test:
+        //console.log(MyLocalStorage.read("items_arr", JSON.parse));
 
         var self = this;
 
@@ -13,54 +16,12 @@ angular.
 
         /*#################################################################*/
         /*Working with Local Storage: begin*/
+        //!!! This must be removed later.
 
         //Object to work with Local Storage:
         self.my_local_storage = {};
 
-        //Get items array from local storage:
-        //-It will return such array.
-        self.my_local_storage.get_items_array = function() {
-          //First check if there anything on this key:
-          if( localStorage.getItem("items_arr") !== null &&
-              localStorage.getItem("items_arr") !== undefined) {
-            return JSON.parse(localStorage.getItem("items_arr"));
-          } else {
-            return [];
-          }
-        };
-
-        //Test:
-        //console.log(self.my_local_storage.get_items_array());
-
-        //Save items array in the local storage:
-        //- You need to pass array to save.
-        //- ! Shallow copy somehow not shallow.
-        self.my_local_storage.save_items_array = function(array) {
-
-          var shallow_array = array.slice();
-          
-          //If array is not empty:
-          if(shallow_array.length !== 0) {
-
-            //Make all items not active:
-            //!!! Somehow this is not shallow copy - there problems with this.
-            /*
-            shallow_array.forEach(function(item) {
-              item.is_active = false;
-            });
-            */
-
-            localStorage.setItem("items_arr", JSON.stringify(shallow_array));
-          } else {
-            //Else just remove item from Local Stogare:
-            localStorage.removeItem("items_arr");
-          }
-        };
-
-        //Reminder how to work with local storage:
-        //- localStorage.setItem("items_arr", JSON.stringify([1,2,3]));
-        //- JSON.parse(localStorage.getItem("items_arr"));
-        //- localStorage.removeItem("items_arr");
+        
 
         /*Working with Local Storage: end*/
         /*#################################################################*/
@@ -71,6 +32,9 @@ angular.
 
         //Items object:
         self.items = {};
+
+        //Key for data in the Local Storage:
+        //self.items.LS_key = "items_arr";
 
         //Items array:
         self.items.arr = [];
@@ -93,7 +57,7 @@ angular.
 
         //Made initial reading of the items array:
         // ! If there is no data in Local Storage, the will be present empty array.
-        self.items.arr = self.my_local_storage.get_items_array();
+        self.items.arr = MyLocalStorage.load_items_arr();
 
         //Function to create unique id for the new item:
         //It will return id. Id is from [1,2,3,4,...].
@@ -342,10 +306,7 @@ angular.
 
           //Check if there are items in items array:
           if(self.items.arr.length !== 0) {
-            if(self.items.arr[item_index].is_active && 
-              //!!! Below is that what is needed to consider problems with shallow copying 
-              //and that for now also save is_active value.
-              self.comments_to_show.some_item_selected === true) {
+            if(self.items.arr[item_index].is_active) {
               return "active_item";
             }
           }
@@ -410,7 +371,7 @@ angular.
         self.my_local_storage.save_all = function(event) {
 
           //Save items:
-          self.my_local_storage.save_items_array(self.items.arr);
+          MyLocalStorage.save_items_arr(self.items.arr);
 
           //Blur save button:
           event.target.blur();
@@ -431,15 +392,19 @@ angular.
 
           //Check if present any changes in "data":
           //!!! Made this better.
-          //!!! For now data will be different also when user select some item, 
-          //because of that tha will be "true" active-property of such item.
           var data_from_local_storage = JSON.stringify(
-            self.my_local_storage.get_items_array()
+            MyLocalStorage.load_items_arr()
           );
-          var data_present_in_app = JSON.stringify(
-            self.items.arr
+          /*Shallow copy of data from app, but with is_active=false:*/
+          var data_present_in_app_shallow = JSON.parse(
+            JSON.stringify(self.items.arr)
           );
-          if(data_present_in_app !== data_from_local_storage) {
+          data_present_in_app_shallow.forEach(function(item) {
+            item.is_active = false;
+          });
+          data_present_in_app_shallow = JSON.stringify(data_present_in_app_shallow);
+
+          if(data_present_in_app_shallow !== data_from_local_storage) {
             var confirmationMessage = "There can be some changes, that will be not saved.";
 
             event.returnValue = confirmationMessage;     // Gecko, Trident, Chrome 34+
