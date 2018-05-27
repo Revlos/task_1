@@ -1,6 +1,0 @@
-- Beginning of the refactoring of the js code.
-!- From this commit I began to use custom services.
-- Now is present real shallow, or clean, copy of arrays. This means such copy when there is no link to original array, its items, or objects from it, at all. Now on saving will be saved all, but not "active" states of items. This state will also not be considered on checking on changing in data of app.
-- Refactoring included:
--- Created a service for using of the Local Storage. Made reading and saving app data by this service.
-- For now is used some really free and safe font.

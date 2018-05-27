@@ -1,9 +1,6 @@
 var gulp = require("gulp");
 // Require the browser-sync
 var browserSync = require("browser-sync").create();
-var del = require("del");
-var fs = require("fs");
-var runSequence = require("run-sequence");
 
 // Task to run a server thru browser-sync
 gulp.task("start", function() {
@@ -16,7 +13,15 @@ gulp.task("start", function() {
   });
 });
 
-/*Working with "distribution" folder:*/
+//--------------------------------------------------------------------
+//!!! For safety delete all what below:-------------------------------
+
+
+var del = require("del");
+var fs = require("fs");
+var runSequence = require("run-sequence");
+
+/*Working with "distribution" folder:--------------------------------*/
 
 //--Copy some files and folders
 gulp.task("dist-fill-copy", function (cb) {
@@ -31,10 +36,10 @@ gulp.task("dist-fill-copy", function (cb) {
 //--Delete some files
 gulp.task("dist-fill-delete", function (cb) {
 
-  del.sync(["*/*/", "!*/dist/"], {cwd: "distribution/bower_components", force: true});
+  del.sync(["*/*/", "!*/dist/"], {cwd: "distribution/bower_components", force: false});
 
   //Delete file of bootstrap which crush push to github.pages:
-  del.sync(["bootstrap/index.html"], {cwd: "distribution/bower_components", force: true});
+  del.sync(["bootstrap/index.html"], {cwd: "distribution/bower_components", force: false});
 
   cb();
 });
@@ -47,5 +52,5 @@ gulp.task("dist-fill", function (cb) {
 //-Empty dist folder
 gulp.task("dist-empty", function () {
   //Delete all files
-  del.sync(["*", "!.gitkeep"], {cwd: "distribution", force: true});
+  del.sync(["*", "!.gitkeep"], {cwd: "distribution", force: false});
 });
